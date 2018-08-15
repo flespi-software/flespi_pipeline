@@ -8,15 +8,31 @@ from gmqtt import Client as MQTTClient
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 STOP = asyncio.Event()
 
+# pds_check_type function to simply test parameter value equals to configured
+def check_value(value):
+    global pds_turn_on_value
+    return value == pds_turn_on_value
+
+# pds_check_type function to test configured bit is set
+def check_bit_set(value):
+    global pds_turn_on_value
+    return((value >> (pds_turn_on_value - 1)) & 0x1) != 0
+
+# pds_check_type function to test configured bit is NOT set
+def check_bit_not_set(value):
+    global pds_turn_on_value
+    return((value >> (pds_turn_on_value - 1)) & 0x1) == 0
+
 # configure pipeline
 ch_id = 1                                       # channel to subscribe
 username = 'FlespiToken '                       # token with ACL to channel above
-mqtt_client_id = "flespi_pipeline"              # client id to use for MQTT session
-broker_host = "mqtt.flespi.io"                  # MQTT broker host
+mqtt_client_id = 'flespi_pipeline'              # client id to use for MQTT session
+broker_host = 'mqtt.flespi.io'                  # MQTT broker host
 publish_topic = 'custom/topic/pds'              # custom topic for private data switch
 qos = 1                                         # MQTT qos to publish/subscribe
+pds_check_type = check_bit_set                  # private data switch check type: check_value, check_bit_set or check_bit_not_set function
 pds_parameter_name = 'custom.din_index'         # private data switch parameter name
-pds_turn_on_value = 1                           # private data switch turn on value
+pds_turn_on_value = 1                           # private data switch turn on value or bit number
 
 # on message received: process message according to Private data switch logic
 # publish processed message to specified topic
@@ -28,7 +44,7 @@ def on_message(client, topic, payload, qos, properties):
         return
 
     # define if pipline message processing required
-    if pds_parameter_name in message_json and message_json[pds_parameter_name] == pds_turn_on_value:
+    if pds_parameter_name in message_json and pds_check_type(message_json[pds_parameter_name]):
         processed_msg = {}
         # iterate over message parameters and exclude position info
         for parameter in message_json:
