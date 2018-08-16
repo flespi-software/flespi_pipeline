@@ -11,4 +11,4 @@ clean-all: clean-pyc
 	rm --force --recursive env/
 
 test:
-	env/bin/python3.5 pipeline.py
+	@env/bin/python3.5 pipeline.py
