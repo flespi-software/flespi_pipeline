@@ -2,6 +2,7 @@ import asyncio
 import signal
 import json
 import uvloop
+from random import random as rnd
 
 from gmqtt import Client as MQTTClient
 
@@ -26,7 +27,7 @@ def check_bit_not_set(value):
 # configure pipeline
 ch_id = 1                                       # channel to subscribe
 username = 'FlespiToken '                       # token with ACL to channel above
-mqtt_client_id = 'flespi_pipeline'              # client id to use for MQTT session
+mqtt_client_id = 'flespi_pipeline_%s' % rnd()   # client id to use for MQTT session
 broker_host = 'mqtt.flespi.io'                  # MQTT broker host
 publish_topic = 'custom/topic/pds'              # custom topic for private data switch
 qos = 1                                         # MQTT qos to publish/subscribe
