@@ -9,7 +9,9 @@ This library is written using `gmqtt <https://github.com/wialon/gmqtt>`_ library
 1. **make init**:
 initialize local virtual environment with python3.5 and set up all required libraries
 
-2. **make test**:
+2. write your parameters in ``# configure pipeline`` section of **pipeline.py**
+
+3. **make test**:
 runs pipeline.py script
 
 More info in `flespi blog <https://flespi.com/blog/private-data-switch-gdpr-compliance-and-personal-location-data-protection>`_
