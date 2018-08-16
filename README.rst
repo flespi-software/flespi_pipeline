@@ -17,3 +17,7 @@ runs pipeline.py script
 
 More info in `flespi blog <https://flespi.com/blog/private-data-switch-gdpr-compliance-and-personal-location-data-protection>`_
 
+Autostart
+---------
+
+To make this script runs as a daemon on system start - see README.rst in `autostart folder <https://github.com/flespi-software/flespi_pipeline/tree/master/autostart>`_
