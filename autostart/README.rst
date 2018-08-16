@@ -1,7 +1,7 @@
 Flespi Pipeline Autostart Facility
 ==================================
 
-To make flespi_pipeline running as a system service and start automatically when your OS is starting up you need to perform this steps:
+To make **flespi_pipeline** running as a system service and start automatically when your OS is starting up you need to perform this steps:
 
 1. Detect your OS init system
 -----------------------------
