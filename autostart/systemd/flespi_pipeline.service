@@ -1,0 +1,19 @@
+[Unit]
+Description=flespi_pipeline: https://github.com/flespi-software/flespi_pipeline
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/env make run
+
+# NOTE: it's better to run that service not from root user, so please change this to some other user:
+User=root
+
+# NOTE: set the correct path to flespi_pipeline project folder:
+WorkingDirectory=/path/to/flespi_pipeline
+
+[Install]
+WantedBy=multi-user.target
