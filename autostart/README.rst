@@ -28,6 +28,17 @@ To make **flespi_pipeline** running as a system service and start automatically 
 
 2.1 **System V**:
 
+* Configure **flespi_pipeline** project to run in foreground (see main README.rst file)
+* Install additional requirement: sudo
+* Copy service file ``autostart/systemv/flespi_pipeline`` to ``/etc/init.d/flespi_pipeline``
+* Edit the file ``/etc/init.d/flespi_pipeline``:
+    * Change ``dir="/path/to/flespi_pipeline"`` according your installation path
+    * Change ``user="root"`` to some other user name according your installation
+* Execute ``chown root:root /etc/init.d/flespi_pipeline``
+* Execute ``chmod 0755 /etc/init.d/flespi_pipeline``
+* Start the service with command ``/etc/init.d/flespi_pipeline start``
+* Enable service autostarting with command ``update-rc.d flespi_pipeline defaults``
+
 2.2 **Upstart**:
 
 * Configure **flespi_pipeline** project to run in foreground (see main README.rst file)
@@ -48,5 +59,5 @@ To make **flespi_pipeline** running as a system service and start automatically 
 * Execute ``chown root:root /lib/systemd/system/flespi_pipeline.service``
 * Execute ``chmod 0644 /lib/systemd/system/flespi_pipeline.service``
 * Execute ``systemctl daemon-reload`` to register new service in the system
-* Enable service autostarting with command ``systemctl enable flespi_pipeline``
 * Start the service with command ``systemctl start flespi_pipeline``
+* Enable service autostarting with command ``systemctl enable flespi_pipeline``
