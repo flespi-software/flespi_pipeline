@@ -19,7 +19,7 @@ To make **flespi_pipeline** running as a system service and start automatically 
 
 1.3 **systemd** is the init system for the most recent distributions featured here:
 
-* Debian 7 and Debian 8
+* Debian 7 and newer
 * Ubuntu 15.04 and newer
 * CentOS 7
 
