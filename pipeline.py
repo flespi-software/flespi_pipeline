@@ -73,7 +73,7 @@ def ask_exit(*args):
     STOP.set()
 
 async def main():
-    client = MQTTClient(mqtt_client_id)
+    client = MQTTClient(mqtt_client_id, session_expiry_interval=86400*10, clean_session=False)
 
     client.on_connect = on_connect
     client.on_message = on_message
