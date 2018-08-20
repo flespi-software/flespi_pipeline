@@ -1,3 +1,15 @@
+# configure pipeline
+ch_id = 1                                       # channel to subscribe
+username = 'FlespiToken '                       # token with ACL to channel above
+mqtt_client_id = 'flespi_pipeline_%s' % ch_id   # client id to use for MQTT session
+broker_host = 'mqtt.flespi.io'                  # MQTT broker host
+publish_topic = 'custom/topic/pds'              # custom topic for private data switch
+qos = 1                                         # MQTT qos to publish/subscribe
+pds_check_type = 'check_bit_set'                # private data switch check type: 'check_value', 'check_bit_set' or 'check_bit_not_set' function
+pds_parameter_name = 'custom.din_index'         # private data switch parameter name
+pds_turn_on_value = 1                           # private data switch turn on value or bit number
+
+# import requirements
 import asyncio
 import signal
 import json
@@ -10,29 +22,20 @@ STOP = asyncio.Event()
 
 # pds_check_type function to simply test parameter value equals to configured
 def check_value(value):
-    global pds_turn_on_value
     return value == pds_turn_on_value
 
 # pds_check_type function to test configured bit is set
 def check_bit_set(value):
-    global pds_turn_on_value
     return((value >> (pds_turn_on_value - 1)) & 0x1) != 0
 
 # pds_check_type function to test configured bit is NOT set
 def check_bit_not_set(value):
-    global pds_turn_on_value
     return((value >> (pds_turn_on_value - 1)) & 0x1) == 0
 
-# configure pipeline
-ch_id = 1                                       # channel to subscribe
-username = 'FlespiToken '                       # token with ACL to channel above
-mqtt_client_id = 'flespi_pipeline_%s' % ch_id   # client id to use for MQTT session
-broker_host = 'mqtt.flespi.io'                  # MQTT broker host
-publish_topic = 'custom/topic/pds'              # custom topic for private data switch
-qos = 1                                         # MQTT qos to publish/subscribe
-pds_check_type = check_bit_set                  # private data switch check type: check_value, check_bit_set or check_bit_not_set function
-pds_parameter_name = 'custom.din_index'         # private data switch parameter name
-pds_turn_on_value = 1                           # private data switch turn on value or bit number
+# NOTE: you can define your own check function like above
+
+# convert pds_check_type to a function
+pds_check_type = globals()[pds_check_type]
 
 # on message received: process message according to Private data switch logic
 # publish processed message to specified topic
