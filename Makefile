@@ -14,3 +14,9 @@ run:
 	@env/bin/python3.5 pipeline.py
 
 test: run
+
+test-merge:
+	@env/bin/python3.5 merging_pipeline.py
+
+test-inject:
+	@env/bin/python3.5 injecting_pipeline.py
