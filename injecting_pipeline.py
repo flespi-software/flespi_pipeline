@@ -43,7 +43,7 @@ def on_connect(client, flags, rc, properties):
 def on_disconnect(client, packet, exc=None):
     print('Disconnected')
 
-def on_subscribe(client, mid, qos):
+def on_subscribe(client, mid, qos, properties):
     print('Subscribed')
 
 def ask_exit(*args):
